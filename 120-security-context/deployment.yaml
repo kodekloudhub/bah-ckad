@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    test: test
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  replicas: 1
+  template:
+    metadata:
+      name: demo-web
+      labels:
+        app: myapp
+    spec:
+      securityContext:
+        runAsUser: 1001
+      containers:
+        - name: nginx-web
+          image: redis
+          securityContext:
+            runAsUser: 1002
+            capabilities:
+              add: ["NET_ADMIN", "SYS_TIME"]

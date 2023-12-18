@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog
+spec:
+  selector:
+    matchLabels:
+      app: blog
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      containers:
+      - name: blog
+        image: sanjeevkt720/350-blog
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-service
+spec:
+  type: ClusterIP
+  selector:
+    app: blog
+  ports:
+  - port: 3000
+    targetPort: 3000
+
+# ecommerce shopping.com
+# shopping.com/products
+# shopping.com/cart
+
+# blogger.com
+

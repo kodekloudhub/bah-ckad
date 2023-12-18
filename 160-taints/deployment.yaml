@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      tolerations:
+        - key: maintenance
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      containers:
+      - name: myapp
+        image: nginx
+

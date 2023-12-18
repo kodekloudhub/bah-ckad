@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: sanjeevkt720/220-app
+        env:
+          - name: MONGO_USER
+            value: root
+          - name: MONGO_PASSWORD
+            value: example
+          - name: MONGO_IP
+            value: mongo-service
+          - name: MONGO_PORT
+            value: "27017"

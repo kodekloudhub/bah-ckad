@@ -1,0 +1,128 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://6486AF48DBDDF2C866C84FB91D0F0FE2.sk1.us-east-1.eks.amazonaws.com
+  name: arn:aws:eks:us-east-1:040497317401:cluster/eks-test
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://58F1867AEE2E262E8800C30B37779AC2.gr7.us-east-1.eks.amazonaws.com
+  name: arn:aws:eks:us-east-1:040497317401:cluster/eksdemo1
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://58F1867AEE2E262E8800C30B37779AC2.gr7.us-east-1.eks.amazonaws.com
+  name: eksdemo1.us-east-1.eksctl.io
+- cluster:
+    certificate-authority: C:\Users\sanje\.minikube\ca.crt
+    extensions:
+    - extension:
+        last-update: Thu, 14 Dec 2023 21:59:38 EST
+        provider: minikube.sigs.k8s.io
+        version: v1.32.0
+      name: cluster_info
+    server: https://192.168.59.125:8443
+  name: multinode
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://9220B6B63E34794B2CC27D99BE72072E.gr7.us-east-1.eks.amazonaws.com
+  name: workshop.us-east-1.eksctl.io
+contexts:
+- context:
+    cluster: eksdemo1.us-east-1.eksctl.io
+    user: admin@eksdemo1.us-east-1.eksctl.io
+  name: admin@eksdemo1.us-east-1.eksctl.io
+- context:
+    cluster: arn:aws:eks:us-east-1:040497317401:cluster/eks-test
+    user: arn:aws:eks:us-east-1:040497317401:cluster/eks-test
+  name: arn:aws:eks:us-east-1:040497317401:cluster/eks-test
+- context:
+    cluster: arn:aws:eks:us-east-1:040497317401:cluster/eksdemo1
+    user: arn:aws:eks:us-east-1:040497317401:cluster/eksdemo1
+  name: arn:aws:eks:us-east-1:040497317401:cluster/eksdemo1
+- context:
+    cluster: multinode
+    extensions:
+    - extension:
+        last-update: Thu, 14 Dec 2023 21:59:38 EST
+        provider: minikube.sigs.k8s.io
+        version: v1.32.0
+      name: context_info
+    namespace: default
+    user: multinode
+  name: multinode
+- context:
+    cluster: workshop.us-east-1.eksctl.io
+    user: user@workshop.us-east-1.eksctl.io
+  name: user@workshop.us-east-1.eksctl.io
+current-context: multinode
+kind: Config
+preferences: {}
+users:
+- name: admin@eksdemo1.us-east-1.eksctl.io
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - eks
+      - get-token
+      - --cluster-name
+      - eksdemo1
+      - --region
+      - us-east-1
+      command: aws
+      env:
+      - name: AWS_STS_REGIONAL_ENDPOINTS
+        value: regional
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+- name: arn:aws:eks:us-east-1:040497317401:cluster/eks-test
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - --region
+      - us-east-1
+      - eks
+      - get-token
+      - --cluster-name
+      - eks-test
+      command: aws
+      env: null
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+- name: arn:aws:eks:us-east-1:040497317401:cluster/eksdemo1
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - --region
+      - us-east-1
+      - eks
+      - get-token
+      - --cluster-name
+      - eksdemo1
+      command: aws
+      env: null
+      interactiveMode: IfAvailable
+      provideClusterInfo: false
+- name: multinode
+  user:
+    client-certificate: C:\Users\sanje\.minikube\profiles\multinode\client.crt
+    client-key: C:\Users\sanje\.minikube\profiles\multinode\client.key
+- name: user@workshop.us-east-1.eksctl.io
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - eks
+      - get-token
+      - --cluster-name
+      - workshop
+      - --region
+      - us-east-1
+      command: aws
+      env:
+      - name: AWS_STS_REGIONAL_ENDPOINTS
+        value: regional
+      interactiveMode: IfAvailable
+      provideClusterInfo: false

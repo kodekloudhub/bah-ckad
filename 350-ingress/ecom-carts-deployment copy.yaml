@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-carts
+spec:
+  selector:
+    matchLabels:
+      app: ecom-carts
+  template:
+    metadata:
+      labels:
+        app: ecom-carts
+    spec:
+
+      containers:
+      - name: ecom-carts
+        image: sanjeevkt720/350-ecom-cart:v3
+        # imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecom-carts-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ecom-carts
+  ports:
+  - port: 3000
+    targetPort: 3000
+
+

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpu
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: gpu
+  template:
+    metadata:
+      labels:
+        app: gpu
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: gpu
+                    operator: In
+                    values: ["true"]
+      tolerations:
+        - key: gpu
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      containers:
+      - name: myapp
+        image: nginx
+

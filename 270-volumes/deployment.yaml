@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: myapp 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      volumes:
+        - name: myvolume
+          persistentVolumeClaim:
+            claimName: mypvc
+      containers:
+      - name: postgres
+        image: postgres
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: myvolume
+        env:
+          - name: POSTGRES_PASSWORD
+            value: password123
+          - name: POSTGRES_USER
+            value: postgres

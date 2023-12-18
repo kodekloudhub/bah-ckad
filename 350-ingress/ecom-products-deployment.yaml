@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-products
+spec:
+  selector:
+    matchLabels:
+      app: ecom-products
+  template:
+    metadata:
+      labels:
+        app: ecom-products
+    spec:
+      containers:
+      - name: ecom-products
+        image: sanjeevkt720/350-ecom-products
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecom-products-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ecom-products
+  ports:
+  - port: 3000
+    targetPort: 3000
+
+

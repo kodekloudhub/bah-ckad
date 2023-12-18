@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: test
+      containers:
+      - name: myapp
+        image: nginx
+        volumeMounts:
+          - name: config-volume
+            mountPath: /usr/share/nginx/html/file1
+            subPath: file1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
