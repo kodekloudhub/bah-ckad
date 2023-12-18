@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-set
+  labels:
+    app: db
+
+spec:
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 500Mi
+  # podManagementPolicy: Parallel
+  serviceName: db-h 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: db
+  template:
+
+    metadata:
+
+      labels:
+        app: db
+    spec:
+
+      containers:
+      - name: database
+        image: nicolaka/netshoot
+        command: ["sleep", "9999999"]
+
